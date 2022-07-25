@@ -1,0 +1,22 @@
+CREATE TABLE Facts (
+fact TEXT NOT NULL,
+favorite INTEGER NOT NULL
+);
+
+insertFacts:
+INSERT INTO Facts( fact, favorite)
+VALUES(?,?);
+
+clearAllFacts:
+DELETE FROM Facts;
+
+selectFactByFact:
+SELECT * FROM Facts
+WHERE fact = ?;
+
+selectAllFavorites:
+SELECT * FROM Facts
+WHERE favorite == 1;
+
+selectAllFacts:
+SELECT * FROM Facts;
