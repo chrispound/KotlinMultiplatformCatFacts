@@ -11,6 +11,7 @@ class CatFactSDK(databaseDriverFactory: DatabaseDriverFactory) {
     suspend fun getCatFact(forceReload: Boolean, todaysFact: CatFact?): List<CatFact> {
         val cachedFacts = database.getAllFacts()
         //TODO: Handle forced reloads
+        //TODO: 1 fact per day
         return if(cachedFacts.isNotEmpty() && cachedFacts.contains(todaysFact) && !forceReload){
             cachedFacts
         } else {
