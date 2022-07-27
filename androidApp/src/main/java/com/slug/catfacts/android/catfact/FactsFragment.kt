@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
 import com.slug.catfacts.android.CatFactsApplication
@@ -25,11 +26,16 @@ class FactsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.loadFacts()
+        viewModel.loadNewFact()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.catFacts.collect {
-                    Log.d("CatFacts", it.toString())
+                    if(it.isNotEmpty()) {
+                        Log.d("CatFactsForTheSoul", it.toString())
+                        val factTV = view.findViewById<TextView>(R.id.fact)
+                        factTV.text = it[0].fact
+                        Log.d("CatFacts", it.toString())
+                    }
                 }
             }
         }

@@ -6,9 +6,10 @@
     tools:context=".catfact.FactsFragment">
 
     <TextView
+        android:id="@+id/fact"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="100dp"
-        android:text="Hello Fragment" />
+        android:text="Loading Fact" />
 
 </FrameLayout>

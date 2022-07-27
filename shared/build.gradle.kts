@@ -11,6 +11,7 @@ val coroutinesVersion = "1.5.0-native-mt"
 val serializationVersion = "1.2.2"
 val ktorVersion = "1.6.1"
 val sqlDelightVersion: String by project
+val loggingVersion =  "1.2.0"
 
 kotlin {
     android()
@@ -36,6 +37,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
                 implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
+                api("org.lighthousegames:logging:$loggingVersion")
             }
         }
         val commonTest by getting {

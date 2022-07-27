@@ -18,7 +18,7 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
     }
 
     internal fun getAllFacts(): List<CatFact> {
-        return dbQuery.selectAllFavorites(::mapCatFact).executeAsList()
+        return dbQuery.selectAllFacts(::mapCatFact).executeAsList()
     }
 
     private fun mapCatFact(
