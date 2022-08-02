@@ -20,3 +20,8 @@ WHERE favorite == 1;
 
 selectAllFacts:
 SELECT * FROM Facts;
+
+updateCatFact:
+UPDATE Facts
+SET favorite = ?
+WHERE fact = ?;

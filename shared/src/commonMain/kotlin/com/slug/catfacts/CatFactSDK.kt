@@ -27,4 +27,12 @@ class CatFactSDK(databaseDriverFactory: DatabaseDriverFactory) {
             }
         }
     }
+
+    fun getAllFacts(): List<CatFact> {
+        return database.getAllFacts()
+    }
+
+    fun updateFactFavorite(catFact: CatFact) {
+        database.updateCatFact(catFact)
+    }
 }

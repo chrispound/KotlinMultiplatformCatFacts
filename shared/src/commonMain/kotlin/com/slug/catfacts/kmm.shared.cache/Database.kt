@@ -1,11 +1,13 @@
 package com.slug.catfacts.kmm.shared.cache
 
 import com.slug.catfacts.CatFact
-import comslugcatfactskmmsharedcache.Facts
+import org.lighthousegames.logging.logging
+import kotlin.math.log
 
 internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
     private val database = AppDatabase(databaseDriverFactory.createDriver())
     private val dbQuery = database.appDatabaseQueries
+    private val log = logging("CatFacts")
 
     internal fun clearDatabase() {
         dbQuery.transaction {
@@ -38,5 +40,12 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
             fact.fact,
             if (fact.favorite) 1L else 0L
         )
+    }
+
+    internal fun updateCatFact(
+        catFact: CatFact
+    ) {
+        log.d{"updateCatFact: (${catFact.fact}. ${catFact.favorite})"}
+        dbQuery.updateCatFact(if (!catFact.favorite) 1L else 0L, catFact.fact)
     }
 }

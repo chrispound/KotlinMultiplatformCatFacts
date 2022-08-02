@@ -25,6 +25,16 @@ class FactsViewModel(private val catFactSDK: CatFactSDK) : ViewModel() {
         }
     }
 
+    fun onItemFavorite(catFact: CatFact) {
+        Log.d("CatFact", "setting ${catFact.favorite}")
+        viewModelScope.launch {
+                catFactSDK.updateFactFavorite(catFact)
+            val facts = catFactSDK.getAllFacts()
+            _mutableCatFacts.emit(facts)
+        }
+
+    }
+
 //    fun loadFacts() {
 //        viewModelScope.launch {
 //            val facts = catFactSDK.getAllLocalFacts()

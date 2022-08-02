@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
+import androidx.recyclerview.widget.RecyclerView
+import com.slug.catfacts.CatFact
 import com.slug.catfacts.android.CatFactsApplication
 import com.slug.catfacts.android.R
 import kotlinx.coroutines.launch
@@ -16,7 +18,7 @@ import kotlinx.coroutines.launch
 class FactsFragment : Fragment() {
 
     private val viewModel: FactsViewModel by viewModels { FactsViewModelFactory((activity?.application as CatFactsApplication).catFactSDK) }
-
+    private lateinit var catFactAdapter: CatFactAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,15 +28,20 @@ class FactsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val rv = view.findViewById<RecyclerView>(R.id.facts)
+        val factFavorited = object : OnFactFavorited {
+            override fun onFavorited(catFact: CatFact) {
+                viewModel.onItemFavorite(catFact)
+            }
+        }
+        catFactAdapter = CatFactAdapter(factFavorited)
+        rv.adapter = catFactAdapter
         viewModel.loadNewFact()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.catFacts.collect {
-                    if(it.isNotEmpty()) {
-                        Log.d("CatFactsForTheSoul", it.toString())
-                        val factTV = view.findViewById<TextView>(R.id.fact)
-                        factTV.text = it[0].fact
-                        Log.d("CatFacts", it.toString())
+                    if (it.isNotEmpty()) {
+                        catFactAdapter.facts = it
                     }
                 }
             }
